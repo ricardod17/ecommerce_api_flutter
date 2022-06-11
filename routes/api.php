@@ -39,6 +39,7 @@ Route::group([
     'prefix' => 'v2',
     'middleware' => 'auth:api',
 ], function () {
+    Route::patch('transaction/{id}', [TransactionController::class, 'update']);
     Route::resource('products', ProductController::class);
     Route::resource('categories', ProductCategoryController::class);
     Route::resource('galleries', ProductGalleryController::class);

@@ -134,7 +134,6 @@ class TransactionController extends Controller
 
     public function update($id, Request $request): JsonResponse|TransactionResource
     {
-        dd($request);
         $data = $request->only($this->request);
         try {
             $result = $this->transactionService->update($id, $data);

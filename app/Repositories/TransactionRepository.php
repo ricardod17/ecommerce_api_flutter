@@ -7,6 +7,7 @@ use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TransactionRepository
 {
@@ -54,6 +55,13 @@ class TransactionRepository
     public function update($transaction, $data): TransactionResource
     {
         $transaction->update($data);
+        $newid = $transaction['id'];
+        // foreach ($data['items'] as $trans) {
+        //     DB::table('transaction_items')->where('transactions_id', $newid)->update([
+        //         'products_id' => $trans['id'],
+        //         'quantity' => $trans['quantity']
+        //     ]);
+        // }
         return new TransactionResource($transaction);
     }
 
