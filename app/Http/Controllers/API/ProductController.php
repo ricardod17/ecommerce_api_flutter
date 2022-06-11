@@ -26,7 +26,7 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index(Request $request): \App\Helpers\ResponseFormatter|ProductCollection
+    public function index(Request $request): JsonResponse|ProductCollection
     {
         try {
             $result = $this->productService->getAll($request);
@@ -34,7 +34,7 @@ class ProductController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Productsuccessfully retrieved');
     }
 
     public function show($id): \Illuminate\Http\JsonResponse|ProductResource
@@ -47,7 +47,7 @@ class ProductController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product successfully retrieved');
     }
 
     public function store(Request $request): JsonResponse|ProductResource
@@ -61,7 +61,7 @@ class ProductController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product created successfully');
     }
 
     public function update($id, Request $request): JsonResponse|ProductResource
@@ -77,7 +77,7 @@ class ProductController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product updated successfully');
     }
 
     public function destroy($id): JsonResponse|ProductResource
@@ -90,7 +90,7 @@ class ProductController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product deleted successfully');
     }
 
     public function all(Request $request)

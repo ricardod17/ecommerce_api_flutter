@@ -9,7 +9,6 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Rules\Password;
 use App\Services\UserService;
 use App\Http\Resources\UserCollection;
@@ -18,8 +17,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Error;
 use InvalidArgumentException;
 use Illuminate\Auth\Access\AuthorizationException;
-
-
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -54,7 +52,7 @@ class UserController extends Controller
         return ResponseFormatter::success($data, "Register success");
     }
 
-    public function index(Request $request): \App\Helpers\ResponseFormatter|UserCollection
+    public function index(Request $request): JsonResponse|UserCollection
     {
         try {
             $result = $this->userService->getAll($request);
@@ -62,10 +60,10 @@ class UserController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Users successfully retrieved');
     }
 
-    public function show($id): \App\Helpers\ResponseFormatter|UserResource
+    public function show($id): JsonResponse|UserResource
     {
         try {
             $result = $this->userService->getById($id);
@@ -75,7 +73,7 @@ class UserController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'User successfully retrieved');
     }
     /**
      * @param Request $request
@@ -111,7 +109,7 @@ class UserController extends Controller
             return ResponseFormatter::error("General error : " . $e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Successfully login');
     }
 
     public function login(Request $request)
@@ -205,7 +203,7 @@ class UserController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'User successfully deleted');
     }
 
     public function updateProfile(Request $request)
@@ -215,10 +213,10 @@ class UserController extends Controller
         $user = Auth::user();
         $user->update($data);
 
-        return ResponseFormatter::success($user, 'Profile Updated');
+        return ResponseFormatter::success($user, 'Profile successfully Updated');
     }
 
-    public function update($id, Request $request): ResponseFormatter|UserResource
+    public function update($id, Request $request): JsonResponse|UserResource
     {
         $data = $request->only($this->request);
         try {
@@ -231,6 +229,6 @@ class UserController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'User successfully updated');
     }
 }

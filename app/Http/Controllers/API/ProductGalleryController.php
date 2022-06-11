@@ -27,7 +27,7 @@ class ProductGalleryController extends Controller
         $this->productGalleryService = $productGalleryService;
     }
 
-    public function index(Request $request): \App\Helpers\ResponseFormatter|ProductGalleryCollection
+    public function index(Request $request): JsonResponse|ProductGalleryCollection
     {
         try {
             $result = $this->productGalleryService->getAll($request);
@@ -35,7 +35,7 @@ class ProductGalleryController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product Gallery successfully retrieved');
     }
 
     public function show($id): \Illuminate\Http\JsonResponse|ProductGalleryResource
@@ -47,13 +47,11 @@ class ProductGalleryController extends Controller
         } catch (\Exception $e) {
             return ResponseFormatter::error($e->getMessage());
         }
-        // dd($result);
-        return $result;
+        return ResponseFormatter::success($result, 'Product Gallery successfully retrieved.');
     }
 
     public function store(Request $request, ProductGallery $product): JsonResponse|ProductGalleryResource
     {
-        // dd($request);
         $data = $request->only($this->request);
         try {
             $result = $this->productGalleryService->create($data);
@@ -63,7 +61,7 @@ class ProductGalleryController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product Gallery created successfully');
     }
 
     public function update($id, Request $request): JsonResponse|ProductGalleryResource
@@ -79,7 +77,7 @@ class ProductGalleryController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product Gallery Updated Successfully');
     }
 
     public function destroy($id): JsonResponse|ProductGalleryResource
@@ -92,6 +90,6 @@ class ProductGalleryController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product Gallery deleted successfully');
     }
 }

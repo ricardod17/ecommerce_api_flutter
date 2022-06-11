@@ -26,7 +26,7 @@ class ProductCategoryController extends Controller
         $this->productCategoryService = $productCategoryService;
     }
 
-    public function index(Request $request): \App\Helpers\ResponseFormatter|ProductCategoryCollection
+    public function index(Request $request): JsonResponse|ProductCategoryCollection
     {
         try {
             $result = $this->productCategoryService->getAll($request);
@@ -34,7 +34,7 @@ class ProductCategoryController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return $result;
+        return ResponseFormatter::success($result);
     }
 
     public function show($id): \Illuminate\Http\JsonResponse|ProductCategoryResource
@@ -47,7 +47,7 @@ class ProductCategoryController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product Category successfully retrieved');
     }
 
     public function store(Request $request): JsonResponse|ProductCategoryResource
@@ -61,7 +61,7 @@ class ProductCategoryController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product Category successfully created');
     }
 
     public function update($id, Request $request): JsonResponse|ProductCategoryResource
@@ -77,7 +77,7 @@ class ProductCategoryController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product Category updated successfully');
     }
 
     public function destroy($id): JsonResponse|ProductCategoryResource
@@ -90,7 +90,7 @@ class ProductCategoryController extends Controller
             return ResponseFormatter::error($e->getMessage(), 500);
         }
 
-        return $result;
+        return ResponseFormatter::success($result, 'Product Category deleted successfully');
     }
 
     public function all(Request $request)
