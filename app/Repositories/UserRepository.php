@@ -45,7 +45,6 @@ class UserRepository
     {
         $data['password'] = Hash::make($data['password']);
         $user = $this->user->create($data);
-
         return new UserResource($user);
     }
 
@@ -73,7 +72,6 @@ class UserRepository
             $login['token'] = Auth::user()->createToken('Laravel8PassportAuth')->accessToken;
             return $login;
         }
-
         throw new ModelNotFoundException(__('failed-login'));
     }
 }

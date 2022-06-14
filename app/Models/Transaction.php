@@ -10,7 +10,8 @@ use App\Traits\HasScope;
 class Transaction extends Model
 {
     use HasFactory, SoftDeletes, HasScope;
-
+    protected $primaryKey = "id";
+    protected $table = 'transactions';
     protected $fillable = ['users_id', 'address', 'payment', 'total_price', 'shipping_price', 'status'];
 
     public function user()

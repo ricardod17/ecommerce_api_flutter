@@ -54,8 +54,12 @@ class UserService
     public function loginPost($data)
     {
         $validator = Validator::make($data, [
-            'username' => 'required',
-            'password' => 'required',
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+            ],
+            'username' => 'required|min:6|max:18',
         ]);
 
         if ($validator->fails()) {
@@ -119,9 +123,13 @@ class UserService
         $validator = Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required',
-            'username' => 'required|unique:users',
-            'phone_number' => 'numeric|required'
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+            ],
+            'username' => 'required|unique:users|min:6|max:18',
+            'phone_number' => 'numeric|nullable|min:11|max:15',
         ]);
 
         if ($validator->fails()) {

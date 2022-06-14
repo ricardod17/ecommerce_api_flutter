@@ -36,7 +36,7 @@ class TransactionController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return ResponseFormatter::success($result);
+        return ResponseFormatter::success($result, 'Transactions retrieved successfully');
     }
 
     public function all(Request $request)

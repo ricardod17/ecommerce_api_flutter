@@ -23,7 +23,6 @@ class TransactionResource extends JsonResource
             'status' => $this->status,
             'payment' => $this->payment,
             'users' => new UserResource($this->user),
-            // 'items' => $this->items,
             'items' => new TransactionItemCollection($this->items),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

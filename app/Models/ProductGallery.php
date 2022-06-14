@@ -11,13 +11,15 @@ use App\Traits\HasScope;
 class ProductGallery extends Model
 {
     use HasFactory, SoftDeletes, HasScope;
-
+    protected $primaryKey = "id";
+    protected $table = 'product_galleries';
     protected $fillable = [
         'users_id', 'products_id', 'url'
     ];
 
     public function products()
     {
+        // return $this->belongsToMany(Product::class, 'product_galleries', 'products_id');
         return $this->belongsTo(Product::class, 'products_id', 'id');
     }
 
