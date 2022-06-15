@@ -34,7 +34,7 @@ class ProductController extends Controller
             return ResponseFormatter::error($e->getMessage());
         }
 
-        return ResponseFormatter::success($result, 'Productsuccessfully retrieved');
+        return ResponseFormatter::success($result, 'Product successfully retrieved');
     }
 
     public function show($id): \Illuminate\Http\JsonResponse|ProductResource

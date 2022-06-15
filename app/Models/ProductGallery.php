@@ -19,8 +19,7 @@ class ProductGallery extends Model
 
     public function products()
     {
-        // return $this->belongsToMany(Product::class, 'product_galleries', 'products_id');
-        return $this->belongsTo(Product::class, 'products_id', 'id');
+        return $this->belongsToMany(Product::class, 'product_galleries');
     }
 
     public function getUrlAttribute($url)
