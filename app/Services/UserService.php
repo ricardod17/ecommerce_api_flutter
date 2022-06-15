@@ -57,7 +57,6 @@ class UserService
             'password' => [
                 'required',
                 'min:8',
-                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
             ],
             'username' => 'required|min:6|max:18',
         ]);
@@ -126,7 +125,6 @@ class UserService
             'password' => [
                 'required',
                 'min:8',
-                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
             ],
             'username' => 'required|unique:users|min:6|max:18',
             'phone_number' => 'numeric|nullable|min:11|max:15',
