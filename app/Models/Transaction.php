@@ -23,12 +23,4 @@ class Transaction extends Model
     {
         return $this->hasMany(TransactionItem::class, 'transactions_id', 'id');
     }
-
-    // public static function boot()
-    // {
-    //     parent::boot();
-    //     self::deleting(function ($transaction) {
-    //         $transaction->items->delete();
-    //     });
-    // }
 }
