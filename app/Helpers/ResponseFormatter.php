@@ -2,32 +2,54 @@
 
 namespace App\Helpers;
 
+/**
+ * Format response.
+ */
 class ResponseFormatter
 {
+    /**
+     * API Response
+     *
+     * @var array
+     */
     protected static $response = [
-        'meta' => [
+        'result' => [
             'code' => 200,
-            'status' => 'success',
-            'message' => null
+            'success' => 'true',
+            'message' => null,
         ],
-        'data' => null
     ];
 
+    /**
+     * Give success response.
+     */
     public static function success($data = null, $message = null)
     {
-        self::$response['meta']['message'] = $message;
+        self::$response['result']['success'] = true;
+        self::$response['result']['message'] = $message;
         self::$response['data'] = $data;
 
-        return response()->json(self::$response, self::$response['meta']['code']);
+        return response()->json(self::$response, self::$response['result']['code']);
     }
 
-    public static function error($data = null, $message = null, $code = 400)
+    /**
+     * Give error response.
+     */
+    public static function error($message = null, $code = 400)
     {
-        self::$response['meta']['status'] = 'error';
-        self::$response['meta']['code'] = $code;
-        self::$response['meta']['message'] = $message;
-        self::$response['data'] = $data;
+        self::$response['result']['success'] = false;
+        self::$response['result']['code'] = $code;
+        self::$response['result']['message'] = $message;
 
-        return response()->json(self::$response, self::$response['meta']['code']);
+        return response()->json(self::$response, self::$response['result']['code']);
+    }
+
+    public static function errorArray($message = [], $code = 400)
+    {
+        self::$response['result']['success'] = false;
+        self::$response['result']['code'] = $code;
+        self::$response['result']['message'] = $message;
+
+        return response()->json(self::$response, self::$response['result']['code']);
     }
 }
