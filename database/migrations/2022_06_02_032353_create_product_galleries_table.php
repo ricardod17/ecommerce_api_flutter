@@ -18,6 +18,7 @@ class CreateProductGalleriesTable extends Migration
             $table->bigInteger('users_id');
             $table->bigInteger('products_id');
             $table->string('url');
+            $table->string('status')->default('ACTIVE');
             $table->softDeletes();
             $table->timestamps();
         });

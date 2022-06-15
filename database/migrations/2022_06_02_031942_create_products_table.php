@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->longText('description');
             $table->string('tags')->nullable();
             $table->bigInteger('categories_id');
+            $table->string('status')->default('ACTIVE');
             $table->softDeletes();
             $table->timestamps();
         });

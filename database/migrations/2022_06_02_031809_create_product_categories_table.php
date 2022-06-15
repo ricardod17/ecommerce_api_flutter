@@ -17,6 +17,7 @@ class CreateProductCategoriesTable extends Migration
             $table->id();
             $table->bigInteger('users_id');
             $table->string('name');
+            $table->string('status')->default('ACTIVE');
             $table->softDeletes();
             $table->timestamps();
         });
