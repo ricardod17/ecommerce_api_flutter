@@ -32,15 +32,20 @@ Route::middleware(['middleware' => 'auth:api'])->group(function () {
     Route::get('transactions', [TransactionController::class, 'index']);
     Route::get('users', [UserController::class, 'index']);
 });
-Route::post('login', [UserController::class, 'postLogin']);
-Route::post('register', [UserController::class, 'postRegister']);
+
+
+Route::prefix('v2')->group(function () {
+    Route::get('products', [ProductController::class, 'index']);
+    Route::post('login', [UserController::class, 'postLogin']);
+    Route::post('register', [UserController::class, 'postRegister']);
+});
 
 Route::group([
     'prefix' => 'v2',
     'middleware' => 'auth:api',
 ], function () {
     Route::patch('transaction/{id}', [TransactionController::class, 'update']);
-    Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class)->except(['index']);
     Route::resource('categories', ProductCategoryController::class);
     Route::resource('galleries', ProductGalleryController::class);
     Route::resource('transactions', TransactionController::class);
