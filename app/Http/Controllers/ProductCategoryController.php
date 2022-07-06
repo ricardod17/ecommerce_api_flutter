@@ -6,6 +6,10 @@ use Illuminate\Support\Str;
 use App\Http\Requests\ProductCategoryRequest;
 use App\Models\ProductCategory;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductCategoryController extends Controller
 {
@@ -61,6 +65,7 @@ class ProductCategoryController extends Controller
      */
     public function store(ProductCategoryRequest $request)
     {
+        $request['users_id'] =  Auth::user()->id;
         $data = $request->all();
 
         ProductCategory::create($data);

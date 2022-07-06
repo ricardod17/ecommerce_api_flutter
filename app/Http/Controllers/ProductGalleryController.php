@@ -8,6 +8,8 @@ use App\Models\ProductGallery;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\ProductGalleryRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductGalleryController extends Controller
 {

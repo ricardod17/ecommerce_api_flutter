@@ -7,6 +7,11 @@ use Illuminate\Support\Str;
 use App\Http\Requests\ProductRequest;
 use App\Models\ProductCategory;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -15,7 +20,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (request()->ajax()) {
             $query = Product::with('category');
@@ -55,6 +60,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+
         $categories = ProductCategory::all();
         return view('pages.dashboard.product.create', compact('categories'));
     }
@@ -67,6 +73,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $request['users_id'] =  Auth::user()->id;
         $data = $request->all();
 
         Product::create($data);
