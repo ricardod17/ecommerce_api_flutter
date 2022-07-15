@@ -7,7 +7,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\API\ProductCategoryController;
 use App\Http\Controllers\API\ProductGalleryController;
-
+use App\Helpers\ResponseFormatter;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,10 +44,15 @@ Route::group([
     'prefix' => 'v2',
     'middleware' => 'auth:api',
 ], function () {
-    Route::patch('transaction/{id}', [TransactionController::class, 'update']);
+    Route::patch('transaction/{id}', [TransactionController::class, 'update', 'index']);
     Route::resource('products', ProductController::class)->except(['index']);
     Route::resource('categories', ProductCategoryController::class);
     Route::resource('galleries', ProductGalleryController::class);
     Route::resource('transactions', TransactionController::class);
     Route::resource('users', UserController::class);
+});
+
+
+Route::fallback(function () {
+    return ResponseFormatter::error('no Route matched with those values', 404);
 });
